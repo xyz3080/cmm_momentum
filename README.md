@@ -14,14 +14,14 @@
    - 训练论文式 CMM 模型。
    - 保存模型和预测信号到 `output/models/cmm/`。
 
-3. `notebooks/03_compare_momentum.ipynb`
+3. `notebooks/02_compare_momentum.ipynb`
    - 比较 CMM 和传统动量因子。
    - 输出十分组累计净值图和绩效表到 `output/reports/model_compare/`。
 
-4. `notebooks/04_explain_cmm_improvement.ipynb`
+4. `notebooks/03_explain_cmm_improvement.ipynb`
    - 检验 CMM 相对传统动量改进的来源。
 
-5. `notebooks/05_barra_cmm_attribution.ipynb`
+5. `notebooks/04_barra_cmm_attribution.ipynb`
    - 参考 Barra 风格模型做收益分解。
 
 6. `python src/validate_outputs.py`
@@ -33,10 +33,10 @@
 config.yaml
 
 notebooks/
-  02_train_cmm_model.ipynb
-  03_compare_momentum.ipynb
-  04_explain_cmm_improvement.ipynb
-  05_barra_cmm_attribution.ipynb
+  01_train_cmm_model.ipynb
+  02_compare_momentum.ipynb
+  03_explain_cmm_improvement.ipynb
+  04_barra_cmm_attribution.ipynb
 
 src/
   data_clean_pipeline.py 数据清洗主逻辑
