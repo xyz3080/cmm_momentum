@@ -1,0 +1,27 @@
+data:
+  lookback_start: 252
+  lookback_end: 22
+  min_history_non_null: 200
+  min_listing_days: 365
+  signal_entry_lag_days: 1
+  winsor_quantile: 0.01
+  compression: zstd
+
+model:
+  seed: 42
+  initial_train_months: 60
+  val_fraction: 0.30
+  test_block_months: 24
+  min_test_block_months: 6
+  n_epochs: 80
+  patience: 12
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  hidden: [128, 64, 32]
+  dropout: 0.05
+
+backtest:
+  eval_split: test
+  deciles: 10
+  allow_validation_split: false
+
