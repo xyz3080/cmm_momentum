@@ -1,4 +1,4 @@
-# 深度学习加权动量因子项目
+# 深度学习加权动量因子
 
 本项目复现并改造论文 **All Days Are Not Created Equal: Understanding Momentum by Learning to Weight Past Returns** 的核心思路：用公司特征学习过去日收益的加权方式，构造深度学习加权动量因子 CMM，并与传统等权动量因子比较。
 
