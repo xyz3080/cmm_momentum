@@ -2,7 +2,51 @@
 
 本项目复现并改造论文 **All Days Are Not Created Equal: Understanding Momentum by Learning to Weight Past Returns** 的核心思路：用公司特征学习过去日收益的加权方式，构造深度学习加权动量因子 CMM，并与传统等权动量因子比较。
 
-## 推荐运行顺序
+## 仓库内容
+
+本仓库保留可复现研究流程所需的代码、配置和 notebook：
+
+```text
+config.yaml
+
+notebooks/
+  01_train_cmm_model.ipynb
+  02_compare_momentum.ipynb
+  03_explain_cmm_improvement.ipynb
+  04_barra_cmm_attribution.ipynb
+
+src/
+  data_clean_pipeline.py 数据清洗主逻辑
+  train_cmm_model.py    模型训练脚本入口
+  backtest.py           涨跌停、调仓、十分组和绩效工具
+  validate_outputs.py   结果完整性和防泄露检查
+```
+
+以下内容没有上传到 GitHub：
+
+- `data/`：原始日行情和财务数据；
+- `docs/`：论文、计划和研报等参考资料；
+- `output/`：清洗后的训练数据、模型权重、预测结果和回测报告。
+
+这些文件体积较大，且可能涉及数据授权或内部资料。代码会在本地运行时重新生成 `output/`。
+
+## 数据目录约定
+
+默认代码假设项目位于一个工作区目录下，原始数据位于项目同级的 `data/` 目录：
+
+```text
+yinhua/
+  data/
+    daily/                 原始日行情 CSV，按交易日存放
+    financial/
+      A_stock_financial.feather
+  docs/
+  cmm_momentum/
+```
+
+如果你的数据放在其他位置，需要相应修改 `src/data_clean_pipeline.py` 和 notebook 中的路径。
+
+## 复现流程
 
 1. `python src/data_clean_pipeline.py`
    - 读取日行情和财务数据。
@@ -27,45 +71,7 @@
 6. `python src/validate_outputs.py`
    - 检查关键产物是否存在，并验证时间对齐、防泄露和测试集预测唯一性。
 
-## 目录结构
-
-```text
-config.yaml
-
-notebooks/
-  01_train_cmm_model.ipynb
-  02_compare_momentum.ipynb
-  03_explain_cmm_improvement.ipynb
-  04_barra_cmm_attribution.ipynb
-
-src/
-  data_clean_pipeline.py 数据清洗主逻辑
-  train_cmm_model.py    模型训练脚本入口
-  backtest.py           涨跌停、调仓、十分组和绩效工具
-  validate_outputs.py   结果完整性和防泄露检查
-
-output/
-  datasets/              清洗后的训练数据与列清单
-  models/cmm/            模型权重、训练历史、预测结果
-  reports/model_compare/ 因子对比图表和绩效表
-  reports/cmm_explain/   CMM 改进机制检验
-  reports/barra_attribution/ Barra 风格收益分解
-```
-
-共享原始数据和参考资料位于 yinhua 根目录：
-
-```text
-../data/
-  daily/                 原始日行情 CSV，按交易日存放
-  financial/             原始财务 Feather 数据
-
-../docs/
-  paper/                 论文原文
-  plan/                  项目计划文档
-  reports/               研报和参考材料
-```
-
-## 关键产物
+## 运行后生成的关键产物
 
 - `output/datasets/cmm_model_training_data.parquet`
   - 每行是一个股票-月份样本。
@@ -98,5 +104,5 @@ CMM_i,t = sum_d w_i,t-d * r_i,t-d
 
 - 原始财务数据必须按 `public_date` 做 point-in-time 对齐，不能直接按 `report_date` 使用。
 - 当前回测比较是研究验证版，默认等权十分组；正式投资组合还应进一步处理交易成本、容量和组合约束。
-- 数据文件较大，`output/datasets/cmm_model_training_data.parquet` 约 1.2G。
-- `output/` 只保留当前代码能够重新生成或验证的核心产物；阶段性探索结果不再混放在主输出目录。
+- `output/` 不纳入 Git 版本管理；如果需要复现结果，请按上面的流程在本地重新生成。
+- 当前代码依赖本地 A 股日行情和财务数据，GitHub 仓库本身不能直接无数据运行。
