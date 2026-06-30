@@ -1,0 +1,11 @@
+diagnostic,value
+CMM mean rank IC,0.08920935991209636
+Equal-weight momentum mean rank IC,-0.014904303789338335
+CMM incremental regression slope t-stat,5.006662307871088
+Momentum incremental regression slope t-stat,-0.13516579350986882
+Mean rank corr: CMM vs equal-weight momentum,0.27060457372961094
+Median effective weighted days,230.5816192626953
+Median max daily weight,0.005052285268902779
+Mean positive-day weight share,0.4628710448741913
+Mean corr: CMM vs first-order approximation,0.9394138183796464
+Mean rank IC: first-order approximation,0.089482276994643

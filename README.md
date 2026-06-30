@@ -22,12 +22,19 @@ src/
   validate_outputs.py   结果完整性和防泄露检查
 ```
 
+GitHub 仓库包含 `output/` 中可直接查看的研究结果：
+
+- `output/reports/`：回测绩效表、累计净值图、解释分析和 Barra 风格收益分解；
+- `output/models/cmm/`：模型权重、fold 切分、训练历史和简单测试回测摘要。
+
 以下内容没有上传到 GitHub：
 
 - `data/`：原始日行情和财务数据；
-- `output/`：清洗后的训练数据、模型权重、预测结果和回测报告。
+- `docs/`：论文、计划和研报等参考资料；
+- `output/datasets/`：清洗后的模型训练数据和列清单；
+- `output/models/cmm/cmm_predictions.parquet`：股票-月份级别的模型预测明细。
 
-这些文件体积较大，且涉及数据授权和内部资料。代码会在本地运行时重新生成 `output/`。
+未上传的文件体积较大，且涉及数据授权或内部资料。代码会在本地运行时重新生成这些文件。
 
 ## 数据目录约定
 
@@ -86,6 +93,8 @@ yinhua/
 - `output/reports/model_compare/performance_metrics_test.csv`
   - CMM 与传统动量的测试集多空绩效对比。
 
+其中 `output/reports/` 和模型权重/训练摘要已随仓库上传；`output/datasets/` 和 `cmm_predictions.parquet` 需要本地运行流程重新生成。
+
 ## 方法说明
 
 CMM 模型不直接用神经网络预测收益。神经网络只把公司特征 `z_i,t` 映射成一个标量 `z_hat_i,t`，然后用它生成过去 231 个日收益的 softmax 权重：
@@ -100,5 +109,7 @@ CMM_i,t = sum_d w_i,t-d * r_i,t-d
 
 ## 注意事项
 
-- `output/` 不纳入 Git 版本管理；如果需要复现结果，请按上面的流程在本地重新生成。
+- 原始财务数据必须按 `public_date` 做 point-in-time 对齐，不能直接按 `report_date` 使用。
+- 当前回测比较是研究验证版，默认等权十分组；正式投资组合还应进一步处理交易成本、容量和组合约束。
+- `output/datasets/` 和股票级预测明细不纳入 Git 版本管理；如果需要完整复现，请按上面的流程在本地重新生成。
 - 当前代码依赖本地 A 股日行情和财务数据，GitHub 仓库本身不能直接无数据运行。
