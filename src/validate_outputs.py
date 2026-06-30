@@ -6,21 +6,21 @@ import pandas as pd
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-OUTPUT = PROJECT_ROOT / "output"
+RESULT = PROJECT_ROOT / "result"
 
 
 REQUIRED_FILES = [
-    OUTPUT / "datasets" / "cmm_model_training_data.parquet",
-    OUTPUT / "datasets" / "cmm_feature_columns.txt",
-    OUTPUT / "datasets" / "cmm_return_window_columns.txt",
-    OUTPUT / "datasets" / "cmm_signal_calendar.csv",
-    OUTPUT / "models" / "cmm" / "cmm_predictions.parquet",
-    OUTPUT / "models" / "cmm" / "cmm_model.pt",
-    OUTPUT / "models" / "cmm" / "cmm_folds.csv",
-    OUTPUT / "reports" / "model_compare" / "performance_metrics_test.csv",
-    OUTPUT / "reports" / "model_compare" / "performance_metrics_value_weighted_test.csv",
-    OUTPUT / "reports" / "cmm_explain" / "explanation_summary.csv",
-    OUTPUT / "reports" / "barra_attribution" / "cmm_barra_attribution_summary.csv",
+    RESULT / "datasets" / "cmm_model_training_data.parquet",
+    RESULT / "datasets" / "cmm_feature_columns.txt",
+    RESULT / "datasets" / "cmm_return_window_columns.txt",
+    RESULT / "datasets" / "cmm_signal_calendar.csv",
+    RESULT / "models" / "cmm" / "cmm_predictions.parquet",
+    RESULT / "models" / "cmm" / "cmm_model.pt",
+    RESULT / "models" / "cmm" / "cmm_folds.csv",
+    RESULT / "reports" / "model_compare" / "performance_metrics_test.csv",
+    RESULT / "reports" / "model_compare" / "performance_metrics_value_weighted_test.csv",
+    RESULT / "reports" / "cmm_explain" / "explanation_summary.csv",
+    RESULT / "reports" / "barra_attribution" / "cmm_barra_attribution_summary.csv",
 ]
 
 
@@ -44,8 +44,8 @@ def main() -> None:
         "target_1m_ret",
         "target_1m_ret_cs_z",
     ]
-    train = pd.read_parquet(OUTPUT / "datasets" / "cmm_model_training_data.parquet", columns=dataset_cols)
-    pred = pd.read_parquet(OUTPUT / "models" / "cmm" / "cmm_predictions.parquet")
+    train = pd.read_parquet(RESULT / "datasets" / "cmm_model_training_data.parquet", columns=dataset_cols)
+    pred = pd.read_parquet(RESULT / "models" / "cmm" / "cmm_predictions.parquet")
 
     for col in ["signal_date", "trade_date", "exit_date", "financial_report_date", "financial_public_date"]:
         train[col] = pd.to_datetime(train[col])
@@ -61,14 +61,14 @@ def main() -> None:
     check(len(test) > 0, "test predictions are present")
     check(not test.duplicated(["stock_id", "signal_date"]).any(), "test predictions have no duplicate stock-month rows")
 
-    folds = pd.read_csv(OUTPUT / "models" / "cmm" / "cmm_folds.csv")
+    folds = pd.read_csv(RESULT / "models" / "cmm" / "cmm_folds.csv")
     check(folds["fold"].is_monotonic_increasing, "fold ids are ordered")
     check(set(pred["split"].unique()).issuperset({"test"}), "prediction split includes test")
 
-    perf = pd.read_csv(OUTPUT / "reports" / "model_compare" / "performance_metrics_test.csv")
+    perf = pd.read_csv(RESULT / "reports" / "model_compare" / "performance_metrics_test.csv")
     check({"CMM", "Standard Momentum", "CMM Neutralized", "Standard Momentum Neutralized"}.issubset(set(perf["factor"])), "main performance table has expected factors")
 
-    print("All output validation checks passed.")
+    print("All result validation checks passed.")
 
 
 if __name__ == "__main__":

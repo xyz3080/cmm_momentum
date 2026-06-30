@@ -22,17 +22,17 @@ src/
   validate_outputs.py   结果完整性和防泄露检查
 ```
 
-GitHub 仓库包含 `output/` 中可直接查看的研究结果：
+GitHub 仓库包含 `result/` 中可直接查看的研究结果：
 
-- `output/reports/`：回测绩效表、累计净值图、解释分析和 Barra 风格收益分解；
-- `output/models/cmm/`：模型权重、fold 切分、训练历史和简单测试回测摘要。
+- `result/reports/`：回测绩效表、累计净值图、解释分析和 Barra 风格收益分解；
+- `result/models/cmm/`：模型权重、fold 切分、训练历史和简单测试回测摘要。
 
 以下内容没有上传到 GitHub：
 
 - `data/`：原始日行情和财务数据；
 - `docs/`：论文、计划和研报等参考资料；
-- `output/datasets/`：清洗后的模型训练数据和列清单；
-- `output/models/cmm/cmm_predictions.parquet`：股票-月份级别的模型预测明细。
+- `result/datasets/`：清洗后的模型训练数据和列清单；
+- `result/models/cmm/cmm_predictions.parquet`：股票-月份级别的模型预测明细。
 
 未上传的文件体积较大，且涉及数据授权或内部资料。代码会在本地运行时重新生成这些文件。
 
@@ -57,15 +57,15 @@ yinhua/
    - 读取日行情和财务数据。
    - 构造 `t-252` 到 `t-22` 的 231 个日收益窗口。
    - 按 `public_date <= signal_date` 生成 point-in-time 财务特征。
-   - 输出模型训练数据到 `output/datasets/`。
+   - 输出模型训练数据到 `result/datasets/`。
 
 2. `python src/train_cmm_model.py`
    - 训练论文式 CMM 模型。
-   - 保存模型和预测信号到 `output/models/cmm/`。
+   - 保存模型和预测信号到 `result/models/cmm/`。
 
 3. `notebooks/02_compare_momentum.ipynb`
    - 比较 CMM 和传统动量因子。
-   - 输出十分组累计净值图和绩效表到 `output/reports/model_compare/`。
+   - 输出十分组累计净值图和绩效表到 `result/reports/model_compare/`。
 
 4. `notebooks/03_explain_cmm_improvement.ipynb`
    - 检验 CMM 相对传统动量改进的来源。
@@ -78,22 +78,22 @@ yinhua/
 
 ## 运行后生成的关键产物
 
-- `output/datasets/cmm_model_training_data.parquet`
+- `result/datasets/cmm_model_training_data.parquet`
   - 每行是一个股票-月份样本。
   - `ret_lag_252` 到 `ret_lag_22` 是过去 231 个交易日对数收益。
   - `z_` 开头列是截面标准化后的特征。
   - `target_1m_ret_cs_z` 是训练标签。
 
-- `output/models/cmm/cmm_model.pt`
+- `result/models/cmm/cmm_model.pt`
   - 训练好的 PyTorch 模型。
 
-- `output/models/cmm/cmm_predictions.parquet`
+- `result/models/cmm/cmm_predictions.parquet`
   - 每个股票-月份的 CMM 预测信号。
 
-- `output/reports/model_compare/performance_metrics_test.csv`
+- `result/reports/model_compare/performance_metrics_test.csv`
   - CMM 与传统动量的测试集多空绩效对比。
 
-其中 `output/reports/` 和模型权重/训练摘要已随仓库上传；`output/datasets/` 和 `cmm_predictions.parquet` 需要本地运行流程重新生成。
+其中 `result/reports/` 和模型权重/训练摘要已随仓库上传；`result/datasets/` 和 `cmm_predictions.parquet` 需要本地运行流程重新生成。
 
 ## 方法说明
 
@@ -111,5 +111,5 @@ CMM_i,t = sum_d w_i,t-d * r_i,t-d
 
 - 原始财务数据必须按 `public_date` 做 point-in-time 对齐，不能直接按 `report_date` 使用。
 - 当前回测比较是研究验证版，默认等权十分组；正式投资组合还应进一步处理交易成本、容量和组合约束。
-- `output/datasets/` 和股票级预测明细不纳入 Git 版本管理；如果需要完整复现，请按上面的流程在本地重新生成。
+- `result/datasets/` 和股票级预测明细不纳入 Git 版本管理；如果需要完整复现，请按上面的流程在本地重新生成。
 - 当前代码依赖本地 A 股日行情和财务数据，GitHub 仓库本身不能直接无数据运行。

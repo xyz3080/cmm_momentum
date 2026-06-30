@@ -144,7 +144,7 @@ FINANCIAL_FEATURE_CANDIDATES = [
 @dataclass(frozen=True)
 class CleanConfig:
     data_dir: Path = WORKSPACE_ROOT / "data"
-    output_dir: Path = PROJECT_ROOT / "output"
+    result_dir: Path = PROJECT_ROOT / "result"
     start_date: str | None = None
     end_date: str | None = None
     lookback_start: int = 252
@@ -463,14 +463,14 @@ def _project_relative_path(path: Path) -> str:
     return str(path)
 
 
-def write_outputs(
+def write_results(
     samples: pd.DataFrame,
     signal_calendar: pd.DataFrame,
     return_cols: list[str],
     feature_cols: list[str],
     config: CleanConfig,
 ) -> dict:
-    dataset_dir = config.output_dir / "datasets"
+    dataset_dir = config.result_dir / "datasets"
     dataset_dir.mkdir(parents=True, exist_ok=True)
 
     dataset_path = dataset_dir / "cmm_model_training_data.parquet"
@@ -559,8 +559,8 @@ def run_pipeline(config: CleanConfig | None = None) -> tuple[pd.DataFrame, dict]
     final_cols = id_cols + return_cols + feature_cols
     samples = samples[final_cols].sort_values(["signal_date", "stock_id"]).reset_index(drop=True)
 
-    print("Writing outputs...")
-    summary = write_outputs(samples, signal_calendar, return_cols, feature_cols, config)
+    print("Writing results...")
+    summary = write_results(samples, signal_calendar, return_cols, feature_cols, config)
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return samples, summary
 

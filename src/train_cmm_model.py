@@ -11,10 +11,10 @@ from torch import nn
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DATA_PATH = PROJECT_ROOT / "output" / "datasets" / "cmm_model_training_data.parquet"
-FEATURE_COLS_PATH = PROJECT_ROOT / "output" / "datasets" / "cmm_feature_columns.txt"
-RETURN_COLS_PATH = PROJECT_ROOT / "output" / "datasets" / "cmm_return_window_columns.txt"
-MODEL_DIR = PROJECT_ROOT / "output" / "models" / "cmm"
+DATA_PATH = PROJECT_ROOT / "result" / "datasets" / "cmm_model_training_data.parquet"
+FEATURE_COLS_PATH = PROJECT_ROOT / "result" / "datasets" / "cmm_feature_columns.txt"
+RETURN_COLS_PATH = PROJECT_ROOT / "result" / "datasets" / "cmm_return_window_columns.txt"
+MODEL_DIR = PROJECT_ROOT / "result" / "models" / "cmm"
 
 
 SEED = 42

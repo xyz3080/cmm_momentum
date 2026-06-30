@@ -2,5 +2,5 @@
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
-output/datasets/
-output/models/cmm/cmm_predictions.parquet
+result/datasets/
+result/models/cmm/cmm_predictions.parquet
