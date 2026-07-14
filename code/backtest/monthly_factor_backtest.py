@@ -1,6 +1,6 @@
 """Compatibility imports for older research scripts.
 
-New code should add ``银华/code`` to ``sys.path`` and import from ``backtest``.
+New code should add the repository's ``code`` directory to ``sys.path`` and import from ``backtest``.
 """
 
 from __future__ import annotations

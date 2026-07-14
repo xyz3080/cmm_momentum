@@ -5,7 +5,7 @@
 ## 目录结构
 
 ```text
-yinhua/
+repository/
   code/backtest/              通用月频信号回测框架
   data/                       共用原始行情与财务数据，不进入 Git
   docs/                       共用论文、研报和研究文档
@@ -39,8 +39,8 @@ python -m pip install -r requirements.txt
 默认数据位置：
 
 ```text
-yinhua/data/daily/                         按交易日存放的 A 股日行情 CSV
-yinhua/data/financial/A_stock_financial.feather  财务数据
+data/daily/                         按交易日存放的 A 股日行情 CSV
+data/financial/A_stock_financial.feather  财务数据
 ```
 
 财务数据必须包含实际公告日。所有财务特征都按 `public_date <= signal_date` 做 point-in-time 对齐，不能用报告期直接代替可得日。
