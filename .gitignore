@@ -1,6 +1,10 @@
 .DS_Store
+.venv/
 __pycache__/
 *.pyc
+.pytest_cache/
 .ipynb_checkpoints/
-result/datasets/
-result/models/cmm/cmm_predictions.parquet
+
+# Shared licensed or private research inputs.
+data/
+docs/

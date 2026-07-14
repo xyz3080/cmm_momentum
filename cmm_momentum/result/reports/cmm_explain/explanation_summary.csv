@@ -1,0 +1,9 @@
+diagnostic,value
+CMM Neutralized mean rank IC,0.0790227552401787
+Equal-weight momentum mean rank IC,-0.014904303789338335
+CMM Neutralized incremental regression slope t-stat,6.885064927506559
+Momentum incremental regression slope t-stat,0.3470727393298272
+Mean rank corr: CMM Neutralized vs equal-weight momentum,0.1227957289570908
+Median effective weighted days,230.66860961914062
+Median max daily weight,0.004965653643012047
+Mean positive-day weight share,0.4775111973285675
